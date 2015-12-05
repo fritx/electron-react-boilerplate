@@ -35,3 +35,8 @@ a:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
+label {
+  -webkit-user-select: none;
+  cursor: pointer;
+}

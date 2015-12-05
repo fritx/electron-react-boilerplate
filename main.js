@@ -128,7 +128,7 @@ app.on('ready', () => {
       submenu: [{
         label: 'Learn More',
         click() {
-          shell.openExternal('https://github.com/afritx');
+          shell.openExternal('https://github.com/fritx');
         }
       }]
     }];
