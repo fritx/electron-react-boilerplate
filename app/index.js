@@ -1,3 +1,10 @@
+
+// https://github.com/atom/electron/issues/3609
+// 禁用mac自带 双击放大功能
+import { webFrame } from 'electron';
+webFrame.setZoomFactor(1); // 确保归位
+webFrame.setZoomLevelLimits(1, 1);
+
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
