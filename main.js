@@ -7,15 +7,18 @@ const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const crashReporter = electron.crashReporter;
 const shell = electron.shell;
+
+const DEV = process.env.NODE_ENV === 'development';
 const OSX = process.platform === 'darwin'
 
 let menu;
 let template;
 let mainWindow = null;
 
-
-require('electron-debug')();
 crashReporter.start();
+
+// 仅开发模式下 启用electron-debug 方便调试
+if (DEV) require('electron-debug')();
 
 
 app.on('window-all-closed', () => {
@@ -36,7 +39,7 @@ app.on('ready', () => {
     mainWindow = null;
   });
 
-  if (process.env.NODE_ENV === 'development') {
+  if (DEV) {
     mainWindow.openDevTools();
   }
 
