@@ -7,17 +7,22 @@ const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const crashReporter = electron.crashReporter;
 const shell = electron.shell;
+
+const DEV = process.env.NODE_ENV === 'development';
+const OSX = process.platform === 'darwin'
+
 let menu;
 let template;
 let mainWindow = null;
 
-
-require('electron-debug')();
 crashReporter.start();
+
+// 仅开发模式下 启用electron-debug 方便调试
+if (DEV) require('electron-debug')();
 
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  if (!OSX) app.quit();
 });
 
 
@@ -34,21 +39,22 @@ app.on('ready', () => {
     mainWindow = null;
   });
 
-  if (process.env.NODE_ENV === 'development') {
+  if (DEV) {
     mainWindow.openDevTools();
   }
 
-  if (process.platform === 'darwin') {
+  if (OSX) {
     template = [{
-      label: 'Electron',
+      label: 'ElectronReact',
       submenu: [{
         label: 'About ElectronReact',
         selector: 'orderFrontStandardAboutPanel:'
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Services',
-        submenu: []
+      // 暂时没有Services
+      // }, {
+      //   type: 'separator'
+      // }, {
+      //   label: 'Services',
+      //   submenu: []
       }, {
         type: 'separator'
       }, {
@@ -100,64 +106,29 @@ app.on('ready', () => {
         accelerator: 'Command+A',
         selector: 'selectAll:'
       }]
-    }, {
-      label: 'View',
-      submenu: [{
-        label: 'Reload',
-        accelerator: 'Command+R',
-        click() {
-          mainWindow.restart();
-        }
-      }, {
-        label: 'Toggle Full Screen',
-        accelerator: 'Ctrl+Command+F',
-        click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
-      }, {
-        label: 'Toggle Developer Tools',
-        accelerator: 'Alt+Command+I',
-        click() {
-          mainWindow.toggleDevTools();
-        }
-      }]
-    }, {
-      label: 'Window',
-      submenu: [{
-        label: 'Minimize',
-        accelerator: 'Command+M',
-        selector: 'performMiniaturize:'
-      }, {
-        label: 'Close',
-        accelerator: 'Command+W',
-        selector: 'performClose:'
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Bring All to Front',
-        selector: 'arrangeInFront:'
-      }]
+    // Window菜单 不方便做自动更新 暂时禁用
+    // }, {
+    //   label: 'Window',
+    //   submenu: [{
+    //     label: 'Minimize',
+    //     accelerator: 'Command+M',
+    //     selector: 'performMiniaturize:'
+    //   }, {
+    //     label: 'Close',
+    //     accelerator: 'Command+W',
+    //     selector: 'performClose:'
+    //   }, {
+    //     type: 'separator'
+    //   }, {
+    //     label: 'Bring All to Front',
+    //     selector: 'arrangeInFront:'
+    //   }]
     }, {
       label: 'Help',
       submenu: [{
         label: 'Learn More',
         click() {
-          shell.openExternal('http://electron.atom.io');
-        }
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        }
-      }, {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
+          shell.openExternal('https://github.com/afritx');
         }
       }]
     }];
@@ -166,59 +137,11 @@ app.on('ready', () => {
     Menu.setApplicationMenu(menu);
   } else {
     template = [{
-      label: '&File',
-      submenu: [{
-        label: '&Open',
-        accelerator: 'Ctrl+O'
-      }, {
-        label: '&Close',
-        accelerator: 'Ctrl+W',
-        click() {
-          mainWindow.close();
-        }
-      }]
-    }, {
-      label: '&View',
-      submenu: [{
-        label: '&Reload',
-        accelerator: 'Ctrl+R',
-        click() {
-          mainWindow.restart();
-        }
-      }, {
-        label: 'Toggle &Full Screen',
-        accelerator: 'F11',
-        click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
-      }, {
-        label: 'Toggle &Developer Tools',
-        accelerator: 'Alt+Ctrl+I',
-        click() {
-          mainWindow.toggleDevTools();
-        }
-      }]
-    }, {
       label: 'Help',
       submenu: [{
         label: 'Learn More',
         click() {
-          shell.openExternal('http://electron.atom.io');
-        }
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        }
-      }, {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
+          shell.openExternal('https://github.com/fritx');
         }
       }]
     }];
