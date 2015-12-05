@@ -1,4 +1,8 @@
 
+// https://github.com/parro-it/debug-menu
+// 开发模式下 开启chrome右键审查菜单 方便调试
+if (__DEV__) require('debug-menu').install();
+
 // https://github.com/atom/electron/issues/3609
 // 禁用mac自带 双击放大功能
 import { webFrame } from 'electron';
