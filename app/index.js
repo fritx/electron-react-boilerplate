@@ -14,11 +14,21 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import routes from './routes';
+<<<<<<< Updated upstream
 import configureStore from './store/configureStore';
 import * as configActions from './actions/config';
 import './app.css';
 
 const store = configureStore();
+=======
+import store from './store';
+import * as configActions from './actions/config';
+import './app.css';
+
+
+// 暴露store到window 方便调试
+if (__DEV__) window.store = store
+>>>>>>> Stashed changes
 
 // 初始加载config 然后render
 store.dispatch(configActions.loadConfig())

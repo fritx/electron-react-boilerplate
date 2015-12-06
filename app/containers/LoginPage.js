@@ -1,19 +1,20 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Login from '../components/Login';
-import * as configActions from '../actions/config';
-import * as userActions from '../actions/user';
+import { userLogin } from '../actions/user';
+import { setRememberMe, setAutoLogin } from '../actions/config';
 
 function mapStateToProps(state) {
   return {
-    config: state.config
+    // loginForm: state.form.login
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    ...configActions,
-    ...userActions
+    userLogin,
+    setRememberMe,
+    setAutoLogin
   }, dispatch);
 }
 
